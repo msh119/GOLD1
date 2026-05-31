@@ -25,6 +25,61 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
   const [localGramPrice, setLocalGramPrice] = useState<string>('3500');
   const [localDiscountCash, setLocalDiscountCash] = useState<string>('50');
 
+  // 🧮 Numeric Keypad Focused field state tracker for the Baladi calc
+  const [activeLocalKeypadField, setActiveLocalKeypadField] = useState<'weight' | 'price' | 'discount'>('weight');
+
+  const handleLocalKeypadPress = (key: string) => {
+    if (activeLocalKeypadField === 'weight') {
+      if (key === '⌫') {
+        setLocalWeight(prev => prev ? prev.slice(0, -1) : '');
+      } else if (key === 'C') {
+        setLocalWeight('');
+      } else if (key === '.') {
+        setLocalWeight(prev => prev.includes('.') ? prev : (prev === '' ? '0.' : prev + '.'));
+      } else {
+        setLocalWeight(prev => {
+          const val = prev + key;
+          if (/^[0-9]*\.?[0-9]*$/.test(val)) {
+            return val;
+          }
+          return prev;
+        });
+      }
+    } else if (activeLocalKeypadField === 'price') {
+      if (key === '⌫') {
+        setLocalGramPrice(prev => prev ? prev.slice(0, -1) : '');
+      } else if (key === 'C') {
+        setLocalGramPrice('');
+      } else if (key === '.') {
+        setLocalGramPrice(prev => prev.includes('.') ? prev : (prev === '' ? '0.' : prev + '.'));
+      } else {
+        setLocalGramPrice(prev => {
+          const val = prev + key;
+          if (/^[0-9]*\.?[0-9]*$/.test(val)) {
+            return val;
+          }
+          return prev;
+        });
+      }
+    } else {
+      if (key === '⌫') {
+        setLocalDiscountCash(prev => prev ? prev.slice(0, -1) : '');
+      } else if (key === 'C') {
+        setLocalDiscountCash('');
+      } else if (key === '.') {
+        setLocalDiscountCash(prev => prev.includes('.') ? prev : (prev === '' ? '0.' : prev + '.'));
+      } else {
+        setLocalDiscountCash(prev => {
+          const val = prev + key;
+          if (/^[0-9]*\.?[0-9]*$/.test(val)) {
+            return val;
+          }
+          return prev;
+        });
+      }
+    }
+  };
+
   // Gold Tracking Portals Data
   const goldWebsites = [
     {
@@ -461,7 +516,7 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
               <div className="lg:col-span-7 space-y-4">
                 
                 {/* Input 1: Weight (الوزن) */}
-                <div className="p-4 bg-neutral-950 rounded-2xl border border-neutral-900 space-y-3 font-sans">
+                <div className={`p-4 bg-neutral-950 rounded-2xl border transition-all space-y-3 font-sans ${activeLocalKeypadField === 'weight' ? 'border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.05)]' : 'border-neutral-900'}`}>
                   <div className="flex items-center justify-between">
                     <label htmlFor="localWeightInput" className="text-[11px] font-black text-neutral-300 flex items-center gap-1.5 uppercase tracking-wide">
                       <Scale className="h-4 w-4 text-amber-400" />
@@ -477,6 +532,8 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                       type="text"
                       inputMode="decimal"
                       value={localWeight}
+                      onFocus={() => setActiveLocalKeypadField('weight')}
+                      onClick={() => setActiveLocalKeypadField('weight')}
                       onChange={(e) => {
                         const val = e.target.value;
                         if (val === '' || /^[0-9]*\.?[0-9]*$/.test(val)) {
@@ -484,7 +541,11 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                         }
                       }}
                       placeholder="e.g. 2.30"
-                      className="w-full py-3 px-4 bg-[#0a0c10] text-amber-400 font-mono font-black text-sm rounded-xl border border-neutral-850 focus:border-amber-500 focus:outline-none transition-colors text-left"
+                      className={`w-full py-3 px-4 bg-[#0a0c10] text-amber-400 font-mono font-black text-sm rounded-xl border transition-all text-left focus:outline-none ${
+                        activeLocalKeypadField === 'weight'
+                          ? 'border-amber-500 ring-1 ring-amber-500/30'
+                          : 'border-neutral-850'
+                      }`}
                     />
                   </div>
                   {/* Presets */}
@@ -493,7 +554,10 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                       <button
                         key={val}
                         type="button"
-                        onClick={() => setLocalWeight(val.toString())}
+                        onClick={() => {
+                          setLocalWeight(val.toString());
+                          setActiveLocalKeypadField('weight');
+                        }}
                         className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-md transition-colors ${
                           parseFloat(localWeight) === val 
                             ? 'bg-amber-500 text-neutral-950 font-black' 
@@ -507,7 +571,7 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                 </div>
 
                 {/* Input 2: Gram Price (سعر الجرام) */}
-                <div className="p-4 bg-neutral-950 rounded-2xl border border-neutral-900 space-y-3 font-sans">
+                <div className={`p-4 bg-neutral-950 rounded-2xl border transition-all space-y-3 font-sans ${activeLocalKeypadField === 'price' ? 'border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.05)]' : 'border-neutral-900'}`}>
                   <div className="flex items-center justify-between">
                     <label htmlFor="localGramPriceInput" className="text-[11px] font-black text-neutral-300 flex items-center gap-1.5 uppercase tracking-wide">
                       <Banknote className="h-4 w-4 text-emerald-400" />
@@ -523,6 +587,8 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                       type="text"
                       inputMode="numeric"
                       value={localGramPrice}
+                      onFocus={() => setActiveLocalKeypadField('price')}
+                      onClick={() => setActiveLocalKeypadField('price')}
                       onChange={(e) => {
                         const val = e.target.value;
                         if (val === '' || /^[0-9]*$/.test(val)) {
@@ -530,7 +596,11 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                         }
                       }}
                       placeholder="e.g. 3500"
-                      className="w-full py-3 px-4 bg-[#0a0c10] text-emerald-400 font-mono font-black text-sm rounded-xl border border-neutral-850 focus:border-emerald-400 focus:outline-none transition-colors text-left"
+                      className={`w-full py-3 px-4 bg-[#0a0c10] text-emerald-400 font-mono font-black text-sm rounded-xl border transition-all text-left focus:outline-none ${
+                        activeLocalKeypadField === 'price'
+                          ? 'border-emerald-500 ring-1 ring-emerald-500/30 bg-emerald-500/[0.01]'
+                          : 'border-neutral-850'
+                      }`}
                     />
                   </div>
                   {/* Intelligent Presets from Real-Time Prices or Common Benchmarks */}
@@ -544,7 +614,10 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                         <button
                           key={idx}
                           type="button"
-                          onClick={() => setLocalGramPrice(val.toString())}
+                          onClick={() => {
+                            setLocalGramPrice(val.toString());
+                            setActiveLocalKeypadField('price');
+                          }}
                           className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-md transition-colors ${
                             parseFloat(localGramPrice) === val 
                               ? 'bg-emerald-500 text-neutral-950 font-black' 
@@ -559,7 +632,7 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                 </div>
 
                 {/* Input 3: Discount in Cash (نسبة الخصم فلوس) */}
-                <div className="p-4 bg-neutral-950 rounded-2xl border border-neutral-950 space-y-3 font-sans">
+                <div className={`p-4 bg-neutral-950 rounded-2xl border transition-all space-y-3 font-sans ${activeLocalKeypadField === 'discount' ? 'border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.05)]' : 'border-neutral-950'}`}>
                   <div className="flex items-center justify-between">
                     <label htmlFor="localDiscountCashInput" className="text-[11px] font-black text-neutral-300 flex items-center gap-1.5 uppercase tracking-wide">
                       <Tag className="h-4 w-4 text-red-400" />
@@ -575,6 +648,8 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                       type="text"
                       inputMode="numeric"
                       value={localDiscountCash}
+                      onFocus={() => setActiveLocalKeypadField('discount')}
+                      onClick={() => setActiveLocalKeypadField('discount')}
                       onChange={(e) => {
                         const val = e.target.value;
                         if (val === '' || /^[0-9]*$/.test(val)) {
@@ -582,7 +657,11 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                         }
                       }}
                       placeholder="e.g. 50"
-                      className="w-full py-3 px-4 bg-[#0a0c10] text-rose-400 font-mono font-black text-sm rounded-xl border border-neutral-850 focus:border-rose-400 focus:outline-none transition-colors text-left"
+                      className={`w-full py-3 px-4 bg-[#0a0c10] text-rose-400 font-mono font-black text-sm rounded-xl border transition-all text-left focus:outline-none ${
+                        activeLocalKeypadField === 'discount'
+                          ? 'border-rose-500 ring-1 ring-rose-500/30 bg-rose-500/[0.01]'
+                          : 'border-neutral-850'
+                      }`}
                     />
                   </div>
                   {/* Presets */}
@@ -591,7 +670,10 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                       <button
                         key={val}
                         type="button"
-                        onClick={() => setLocalDiscountCash(val.toString())}
+                        onClick={() => {
+                          setLocalDiscountCash(val.toString());
+                          setActiveLocalKeypadField('discount');
+                        }}
                         className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-md transition-colors ${
                           parseFloat(localDiscountCash) === val 
                             ? 'bg-rose-500 text-neutral-950 font-black' 
@@ -601,6 +683,76 @@ export const SystemInfo: React.FC<SystemInfoProps> = ({ language, prices, histor
                         {val === 0 ? (language === 'ar' ? 'بدون خصم' : 'No Discount') : `${val.toLocaleString()} EGP`}
                       </button>
                     ))}
+                  </div>
+                </div>
+
+                {/* 🧮 Interactive Tactile Virtual Keypad */}
+                <div className="bg-neutral-950 p-4 rounded-2xl border border-neutral-900 space-y-3 mt-4">
+                  <div className="flex items-center justify-between border-b border-neutral-900 pb-2 mb-2">
+                    <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-black flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      {language === 'ar' ? 'لوحة أرقام الحاسبة السريعة' : 'Fast Calculator Keypad'}
+                    </span>
+                    <span className="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-black font-sans uppercase">
+                      {activeLocalKeypadField === 'weight' 
+                        ? (language === 'ar' ? 'المدخل: الوزن' : 'Active: Weight') 
+                        : activeLocalKeypadField === 'price'
+                        ? (language === 'ar' ? 'المدخل: السعر' : 'Active: Price')
+                        : (language === 'ar' ? 'المدخل: الخصم' : 'Active: Discount')}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-2">
+                    {['1', '2', '3', 'C', '4', '5', '6', '⌫', '7', '8', '9', '.', '0'].map((key) => {
+                      let buttonStyle = "py-3 text-sm font-mono font-black rounded-xl transition-all cursor-pointer flex items-center justify-center ";
+                      if (key === 'C') {
+                        buttonStyle += "bg-rose-950/20 text-rose-400 hover:bg-rose-950/40 border border-rose-900/30";
+                      } else if (key === '⌫') {
+                        buttonStyle += "bg-neutral-900 text-rose-400 hover:text-white hover:bg-neutral-800 border border-neutral-850";
+                      } else if (key === '.') {
+                        buttonStyle += "bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 border border-neutral-850";
+                      } else {
+                        buttonStyle += "bg-neutral-900/60 text-white hover:bg-neutral-850 border border-neutral-900 hover:border-emerald-500/20";
+                      }
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => handleLocalKeypadPress(key)}
+                          className={`${buttonStyle} select-none active:scale-95`}
+                        >
+                          {key === '⌫' ? (language === 'ar' ? 'تراجع' : 'DEL') : key}
+                        </button>
+                      );
+                    })}
+                    <div className="col-span-3">
+                      <div className="grid grid-cols-3 gap-1">
+                        {(['weight', 'price', 'discount'] as const).map((f) => {
+                          const labels = {
+                            weight: { ar: 'الوزن', en: 'Weight' },
+                            price: { ar: 'السعر', en: 'Price' },
+                            discount: { ar: 'الخصم', en: 'Discount' }
+                          };
+                          const isActive = activeLocalKeypadField === f;
+                          return (
+                            <button
+                              key={f}
+                              type="button"
+                              onClick={() => {
+                                setActiveLocalKeypadField(f);
+                              }}
+                              className={`py-2 text-[10px] font-bold rounded-lg transition-all border ${
+                                isActive 
+                                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
+                                  : 'bg-neutral-900/40 hover:bg-neutral-900 text-neutral-400 border-neutral-900'
+                              }`}
+                            >
+                              {language === 'ar' ? labels[f].ar : labels[f].en}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 

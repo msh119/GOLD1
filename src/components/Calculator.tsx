@@ -46,6 +46,46 @@ export const Calculator: React.FC<CalculatorProps> = ({
   const [isFormulaExpanded, setIsFormulaExpanded] = useState<boolean>(false);
   const [notification, setNotification] = useState<string | null>(null);
 
+  // 🧮 Numeric Keypad Focused field state tracker
+  const [activeKeypadField, setActiveKeypadField] = useState<'weight' | 'purity'>('weight');
+
+  const handleKeypadPress = (key: string) => {
+    if (activeKeypadField === 'weight') {
+      if (key === '⌫') {
+        setWeight(prev => prev ? prev.slice(0, -1) : '');
+      } else if (key === 'C') {
+        setWeight('');
+      } else if (key === '.') {
+        setWeight(prev => prev.includes('.') ? prev : (prev === '' ? '0.' : prev + '.'));
+      } else {
+        setWeight(prev => {
+          const val = prev + key;
+          if (/^[0-9]*\.?[0-9]*$/.test(val)) {
+            return val;
+          }
+          return prev;
+        });
+      }
+    } else {
+      if (key === '⌫') {
+        setPurity(prev => prev ? prev.slice(0, -1) : '');
+      } else if (key === 'C') {
+        setPurity('');
+      } else if (key === '.') {
+        setPurity(prev => prev.includes('.') ? prev : (prev === '' ? '0.' : prev + '.'));
+      } else {
+        setPurity(prev => {
+          const val = prev + key;
+          if (parseFloat(val) > 1000) return prev;
+          if (/^[0-9]*\.?[0-9]*$/.test(val)) {
+            return val;
+          }
+          return prev;
+        });
+      }
+    }
+  };
+
   // Auto-calculated fields
   const parsedWeight = parseFloat(weight) || 0;
   const parsedPurity = parseFloat(purity) || 0;
@@ -206,13 +246,23 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 </label>
                 <div className="relative">
                   <input
-                    type="number"
-                    step="any"
-                    min="0"
+                    type="text"
+                    inputMode="decimal"
                     placeholder={t.weightPlaceholder}
                     value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                    className="w-full bg-black border border-neutral-800 hover:border-neutral-700 focus:border-amber-500 rounded-2xl px-5 py-4 text-2xl font-black text-amber-400 focus:outline-none transition-all font-mono"
+                    onFocus={() => setActiveKeypadField('weight')}
+                    onClick={() => setActiveKeypadField('weight')}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === '' || /^[0-9]*\.?[0-9]*$/.test(val)) {
+                        setWeight(val);
+                      }
+                    }}
+                    className={`w-full bg-black border rounded-2xl px-5 py-4 text-2xl font-black text-amber-400 focus:outline-none transition-all font-mono ${
+                      activeKeypadField === 'weight'
+                        ? 'ring-2 ring-amber-500/50 border-amber-500 bg-amber-500/[0.02]'
+                        : 'border-neutral-800 hover:border-neutral-700'
+                    }`}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                   />
                   <div className={`absolute inset-y-0 flex items-center px-5 text-xs font-black text-neutral-500 ${language === 'ar' ? 'left-0 border-r border-neutral-850' : 'right-0 border-l border-neutral-850'}`}>
@@ -228,6 +278,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       onClick={() => {
                         const currentVal = parseFloat(weight) || 0;
                         setWeight((currentVal + addAmount).toFixed(1).replace(/\.0$/, ''));
+                        setActiveKeypadField('weight');
                       }}
                       className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-bold bg-neutral-900 border border-neutral-850 hover:border-neutral-750 text-neutral-300 hover:text-white transition-all cursor-pointer"
                     >
@@ -236,7 +287,10 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   ))}
                   <button
                     type="button"
-                    onClick={() => setWeight('')}
+                    onClick={() => {
+                      setWeight('');
+                      setActiveKeypadField('weight');
+                    }}
                     className="px-3 py-1.5 rounded-lg text-[11px] font-bold bg-rose-950/20 border border-rose-900/30 text-rose-400 hover:bg-rose-900/20 transition-all cursor-pointer shrink-0"
                   >
                     C
@@ -254,18 +308,80 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 </div>
                 <div className="relative">
                   <input
-                    type="number"
-                    step="any"
-                    min="1"
-                    max="1000"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={t.purityPlaceholder}
                     value={purity}
-                    onChange={(e) => setPurity(e.target.value)}
-                    className="w-full bg-[#07080a] border border-neutral-800 hover:border-neutral-700 focus:border-amber-500 rounded-xl px-4 py-3.5 text-base font-bold text-white placeholder-neutral-700 focus:outline-none transition-all font-mono"
+                    onFocus={() => setActiveKeypadField('purity')}
+                    onClick={() => setActiveKeypadField('purity')}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === '' || /^[0-9]*\.?[0-9]*$/.test(val)) {
+                        if (val === '' || parseFloat(val) <= 1000) {
+                          setPurity(val);
+                        }
+                      }
+                    }}
+                    className={`w-full bg-[#07080a] border rounded-xl px-4 py-3.5 text-base font-bold text-white placeholder-neutral-700 focus:outline-none transition-all font-mono ${
+                      activeKeypadField === 'purity'
+                        ? 'ring-2 ring-amber-500/50 border-amber-500 bg-amber-500/[0.02]'
+                        : 'border-neutral-800 hover:border-neutral-700'
+                    }`}
                     dir={language === 'ar' ? 'rtl' : 'ltr'}
                   />
                   <div className={`absolute inset-y-0 flex items-center px-4 text-xs font-bold text-neutral-500 ${language === 'ar' ? 'left-0 border-r border-neutral-850' : 'right-0 border-l border-neutral-850'}`}>
                     {t.shares}
+                  </div>
+                </div>
+              </div>
+
+              {/* 🧮 Interactive Tactile Virtual Keypad */}
+              <div className="bg-neutral-950 p-4 rounded-2xl border border-neutral-900 space-y-3 mt-4">
+                <div className="flex items-center justify-between border-b border-neutral-900 pb-2 mb-2">
+                  <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-black flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    {language === 'ar' ? 'لوحة أرقام براميدز اللمسية' : 'Pyramids Keypad Link'}
+                  </span>
+                  <span className="text-[9px] bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2 py-0.5 rounded font-black font-sans uppercase">
+                    {activeKeypadField === 'weight' 
+                      ? (language === 'ar' ? 'المدخل الحالي: الوزن' : 'Active: Weight') 
+                      : (language === 'ar' ? 'المدخل الحالي: العيار' : 'Active: Caliber')}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-4 gap-2">
+                  {['1', '2', '3', 'C', '4', '5', '6', '⌫', '7', '8', '9', '.', '0'].map((key) => {
+                    let buttonStyle = "py-3 text-sm font-mono font-black rounded-xl transition-all cursor-pointer flex items-center justify-center ";
+                    if (key === 'C') {
+                      buttonStyle += "bg-rose-950/20 text-rose-400 hover:bg-rose-950/40 border border-rose-900/30";
+                    } else if (key === '⌫') {
+                      buttonStyle += "bg-neutral-900 text-rose-400 hover:text-white hover:bg-neutral-800 border border-neutral-850";
+                    } else if (key === '.') {
+                      buttonStyle += "bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800 border border-neutral-850";
+                    } else {
+                      buttonStyle += "bg-neutral-900/60 text-white hover:bg-neutral-850 border border-neutral-900 hover:border-amber-500/20";
+                    }
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => handleKeypadPress(key)}
+                        className={`${buttonStyle} select-none active:scale-95`}
+                      >
+                        {key === '⌫' ? (language === 'ar' ? 'تراجع' : 'DEL') : key}
+                      </button>
+                    );
+                  })}
+                  <div className="col-span-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveKeypadField(prev => prev === 'weight' ? 'purity' : 'weight');
+                      }}
+                      className="w-full py-3 text-xs font-black rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/20 hover:border-amber-500/30 transition-all cursor-pointer text-center select-none active:scale-[0.98]"
+                    >
+                      {language === 'ar' ? 'تبديل حقل الإدخال ⇆' : 'Switch Input Target ⇆'}
+                    </button>
                   </div>
                 </div>
               </div>
