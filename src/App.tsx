@@ -178,7 +178,7 @@ export default function App() {
       />
 
       {/* Body Frame Wrapper */}
-      <div className="mx-auto flex max-w-7xl">
+      <div className="mx-auto flex max-w-[1600px]">
         
         {/* Sidebar Nav (Desktop only) */}
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} language={language} />

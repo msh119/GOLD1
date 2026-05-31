@@ -16,6 +16,7 @@ import {
   Scale
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { ThreeDBullion } from './ThreeDVisuals';
 
 interface HomeDashboardProps {
   prices: GoldPrices;
@@ -101,10 +102,10 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     <div className="flex flex-col gap-6 md:gap-8">
       
       {/* Front Welcome Bento Hero Card */}
-      <div className="bento-card bg-gradient-to-br from-[#161616] via-[#111111] to-[#161616] border border-amber-500/20 shadow-2xl">
-        <div className="absolute right-0 top-0 -mr-6 -mt-6 h-36 w-36 rounded-full bg-yellow-500/[0.03] blur-3xl"></div>
+      <div className="bento-card bg-gradient-to-br from-[#132247]/20 via-[#0d0d0d] to-[#161616] border border-blue-500/25 shadow-2xl shadow-blue-950/10">
+        <div className="absolute right-0 top-0 -mr-6 -mt-6 h-36 w-36 rounded-full bg-blue-500/[0.06] blur-3xl"></div>
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-[var(--gold)] mb-3">
+          <div className="flex items-center gap-2 text-blue-400 mb-3">
             <Sparkles className="h-5 w-5" />
             <span className="text-[10px] font-extrabold tracking-widest uppercase font-mono">{t.appName}</span>
           </div>
@@ -185,8 +186,10 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         {/* Left main: Active market overview and benchmarks - Col span 7 */}
         <div className="lg:col-span-7 flex flex-col gap-6">
           
+          <ThreeDBullion language={language} price24K={prices.g24} price21K={prices.g21} />
+          
           <div className="bento-card">
-            <h3 className="text-xs font-extrabold text-[var(--gold)] uppercase tracking-widest font-mono flex items-center gap-2 mb-6 border-b border-neutral-900 pb-3">
+            <h3 className="text-xs font-extrabold text-blue-400 uppercase tracking-widest font-mono flex items-center gap-2 mb-6 border-b border-neutral-900 pb-3">
               <span>◆</span>
               {t.marketOverview}
             </h3>
@@ -195,17 +198,17 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               
               <div className="bg-black/40 border border-neutral-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden group">
                 <span className="text-[10px] font-bold text-neutral-500 font-mono uppercase block mb-1">{t.g24}</span>
-                <span className="text-lg md:text-xl font-black font-mono text-amber-500">{formatNum(prices.g24, 0)}</span>
+                <span className="text-lg md:text-xl font-black font-mono text-cyan-400">{formatNum(prices.g24, 0)}</span>
                 <span className="text-[9px] text-neutral-500 font-medium block mt-3 select-none">100% {t.pureGold.split(' ')[0]}</span>
               </div>
 
               <div className="bg-black/40 border border-neutral-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden group">
                 <span className="text-[10px] font-bold text-neutral-500 font-mono uppercase block mb-1">{t.g21}</span>
-                <span className="text-lg md:text-xl font-black font-mono text-yellow-400">{formatNum(prices.g21, 0)}</span>
+                <span className="text-lg md:text-xl font-black font-mono text-yellow-500">{formatNum(prices.g21, 0)}</span>
                 <span className="text-[9px] text-neutral-500 font-medium block mt-3 select-none">87.5% {language === 'ar' ? 'نقاء' : 'Fine'}</span>
               </div>
 
-              <div className="bg-black/40 border border-neutral-900 rounded-1.5xl p-4 flex flex-col justify-between relative overflow-hidden group">
+              <div className="bg-black/40 border border-neutral-900 rounded-2xl p-4 flex flex-col justify-between relative overflow-hidden group">
                 <span className="text-[10px] font-bold text-neutral-500 font-mono uppercase block mb-1">{t.g18}</span>
                 <span className="text-lg md:text-xl font-black font-mono text-amber-600">{formatNum(prices.g18, 0)}</span>
                 <span className="text-[9px] text-neutral-500 font-medium block mt-3 select-none">75% {language === 'ar' ? 'نقاء' : 'Fine'}</span>
@@ -215,7 +218,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
             {/* Quick guidance formula widget */}
             <div className="rounded-xl border border-neutral-900 bg-neutral-950/40 p-4.5 flex items-start gap-4">
-              <div className="h-10 w-10 shrink-0 rounded-lg bg-yellow-500/10 flex items-center justify-center text-[var(--gold)]">
+              <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
                 <TrendingUp className="h-5 w-5" />
               </div>
               <div className="space-y-1">
@@ -232,7 +235,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
             <div className="mt-6 border-t border-neutral-900 pt-5">
               <span className="block text-[11px] font-bold text-neutral-400 mb-3.5 uppercase font-mono tracking-wider">{t.chartPurityDistribution}</span>
               <div className="h-4 w-full bg-neutral-950 rounded-full flex overflow-hidden border border-neutral-900/40">
-                <div className="bg-gradient-to-r from-amber-600 to-amber-500 h-full" style={{ width: '24%' }} title="24K" />
+                <div className="bg-gradient-to-r from-blue-600 via-blue-400 to-cyan-500 h-full" style={{ width: '24%' }} title="24K" />
                 <div className="bg-gradient-to-r from-amber-500 to-yellow-400 h-full" style={{ width: '51%' }} title="21K" />
                 <div className="bg-gradient-to-r from-yellow-400 to-yellow-200 h-full" style={{ width: '25%' }} title="18K" />
               </div>

@@ -50,26 +50,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, langu
                 onClick={() => setActiveTab(item.id)}
                 className={`group relative flex items-center gap-3.5 rounded-xl px-4 py-3.5 text-sm font-medium transition-all ${
                   isActive
-                    ? 'text-yellow-400 bg-gradient-to-r from-yellow-500/10 to-transparent border-l-2 border-yellow-500'
+                    ? 'text-blue-400 bg-gradient-to-r from-blue-500/10 to-transparent'
                     : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
                 }`}
                 style={{
-                  borderLeft: isActive && language === 'en' ? '2px solid #d4af37' : '',
-                  borderRight: isActive && language === 'ar' ? '2px solid #d4af37' : '',
+                  borderLeft: isActive && language === 'en' ? '2px solid #3b82f6' : '',
+                  borderRight: isActive && language === 'ar' ? '2px solid #3b82f6' : '',
                 }}
               >
                 {/* Visual Glow or dot in background of active */}
                 {isActive && (
                   <motion.div
                     layoutId="activeGlow"
-                    className="absolute inset-0 rounded-xl bg-yellow-500/[0.02]"
+                    className="absolute inset-0 rounded-xl bg-blue-500/[0.04]"
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
                 )}
 
                 <Icon 
                   className={`h-5 w-5 transition-transform group-hover:scale-105 ${
-                    isActive ? 'text-yellow-400' : 'text-neutral-500 group-hover:text-neutral-400'
+                    isActive ? 'text-blue-400' : 'text-neutral-500 group-hover:text-neutral-400'
                   }`} 
                 />
                 

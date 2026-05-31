@@ -31,23 +31,23 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[rgba(212,175,55,0.15)] bg-[#0d0d0d]/90 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
         
         {/* Brand Logo and Title */}
         <div className="flex items-center gap-3">
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-neutral-900 to-black border-2 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.25)] hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] transition-all duration-300 group overflow-hidden">
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-neutral-900 via-blue-950/20 to-black border-2 border-blue-500/50 shadow-[0_0_15px_rgba(37,99,235,0.35)] hover:shadow-[0_0_25px_rgba(37,99,235,0.65)] transition-all duration-300 group overflow-hidden">
             {/* Glowing gradient background base */}
-            <div className="absolute -inset-0.5 bg-gradient-to-br from-amber-500/15 to-yellow-500/5 opacity-60 blur-xs rounded-xl"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-500/25 to-amber-500/10 opacity-70 blur-xs rounded-xl"></div>
             
             {/* The Distinctive Glowing P G Brand letters */}
-            <span className="relative z-10 font-mono font-black text-sm tracking-tighter select-none bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-400 bg-clip-text text-transparent filter drop-shadow-[0_0_4px_rgba(245,158,11,0.8)]">
+            <span className="relative z-10 font-mono font-black text-sm tracking-tighter select-none bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-400 bg-clip-text text-transparent filter drop-shadow-[0_0_4px_rgba(245,158,11,0.8)] font-black">
               P G
             </span>
             
             {/* Subtle animated neon light flare */}
             <span className="absolute top-1 left-1 flex h-1 w-1">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-1 w-1 bg-amber-400"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-1 w-1 bg-blue-400"></span>
             </span>
           </div>
           <div>
@@ -103,8 +103,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveTab('settings')}
             className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all cursor-pointer ${
               activeTab === 'settings'
-                ? 'border-[var(--gold)] bg-[var(--gold)]/15 text-[var(--gold-light)] shadow-md shadow-yellow-500/5'
-                : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:border-[var(--gold)]/40 hover:text-[var(--gold-light)] hover:bg-neutral-850'
+                ? 'border-blue-500 bg-blue-500/15 text-blue-400 shadow-md shadow-blue-500/10'
+                : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:border-blue-500/40 hover:text-blue-300 hover:bg-neutral-850'
             }`}
             title={t.settingsTab}
             aria-label={t.settingsTab}

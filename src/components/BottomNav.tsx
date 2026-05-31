@@ -44,24 +44,24 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab, l
               onClick={() => setActiveTab(item.id)}
               className="relative flex flex-1 flex-col items-center justify-center py-1.5 transition-all outline-none"
             >
-              {/* Gold dot indicating active state */}
+              {/* Blue dot indicating active state */}
               {isActive && (
                 <motion.span
                   layoutId="activeBottomDot"
-                  className="absolute top-0 h-1 w-8 rounded-full bg-yellow-400"
+                  className="absolute top-0 h-1 w-8 rounded-full bg-blue-500"
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
 
               <Icon
                 className={`h-5 w-5 mb-1 transition-transform ${
-                  isActive ? 'text-yellow-400 scale-110' : 'text-neutral-500'
+                  isActive ? 'text-blue-400 scale-110' : 'text-neutral-500'
                 }`}
               />
 
               <span
                 className={`text-[11px] font-medium tracking-tight ${
-                  isActive ? 'text-yellow-400' : 'text-neutral-500'
+                  isActive ? 'text-blue-400' : 'text-neutral-500'
                 }`}
               >
                 {item.label}

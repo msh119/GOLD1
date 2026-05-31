@@ -41,8 +41,8 @@
   }
   
   .bento-card:hover {
-    border-color: rgba(212, 175, 55, 0.35);
-    box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.08);
+    border-color: rgba(59, 130, 246, 0.45);
+    box-shadow: 0 12px 35px -8px rgba(37, 99, 235, 0.18), 0 0 15px -3px rgba(59, 130, 246, 0.1);
   }
 }
 
