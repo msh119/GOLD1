@@ -190,13 +190,10 @@ export default function App() {
       </div>
 
       {/* Body Frame Wrapper */}
-      <div className="mx-auto flex max-w-[1600px] relative z-10">
+      <div className="mx-auto flex max-w-[1400px] relative z-10 justify-center">
         
-        {/* Sidebar Nav (Desktop only) */}
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
-
         {/* Core Main Viewport content */}
-        <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 pb-24 md:pb-8 relative z-20">
+        <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 pb-32 md:pb-36 relative z-20 max-w-5xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -212,7 +209,7 @@ export default function App() {
 
       </div>
 
-      {/* Sticky Bottom Nav (Mobile only) */}
+      {/* 🚀 PREMIUM RESPONSIVE FLOATING BOTTOM BAR / DOCK 🚀 */}
       <div className="relative z-30">
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
       </div>
