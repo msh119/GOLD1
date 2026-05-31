@@ -35,19 +35,21 @@ export const Header: React.FC<HeaderProps> = ({
         
         {/* Brand Logo and Title */}
         <div className="flex items-center gap-3">
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-neutral-900 via-blue-950/20 to-black border-2 border-blue-500/50 shadow-[0_0_15px_rgba(37,99,235,0.35)] hover:shadow-[0_0_25px_rgba(37,99,235,0.65)] transition-all duration-300 group overflow-hidden">
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-neutral-900 border-2 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.25)] hover:shadow-[0_0_25px_rgba(245,158,11,0.45)] transition-all duration-300 group overflow-hidden">
             {/* Glowing gradient background base */}
-            <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-500/25 to-amber-500/10 opacity-70 blur-xs rounded-xl"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-amber-500/20 to-orange-500/10 opacity-70 blur-xs rounded-xl"></div>
             
-            {/* The Distinctive Glowing P G Brand letters */}
-            <span className="relative z-10 font-mono font-black text-sm tracking-tighter select-none bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-400 bg-clip-text text-transparent filter drop-shadow-[0_0_4px_rgba(245,158,11,0.8)] font-black">
-              P G
-            </span>
+            <img 
+              src="https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-6/555918514_1376236214503912_7142926422343815940_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-Ee25hTmxCsQ7kNvwFuTPVH&_nc_oc=AdqlyaoAk5d0Tbidf0BDTv33gNOoATPHt8IsqnLkEr8D8HCTA-Lghj9jSqN9Q02pH08&_nc_zt=23&_nc_ht=scontent.fcai19-6.fna&_nc_gid=k43zHmpgIfbl2j-2R1K4ZA&_nc_ss=7b289&oh=00_Af_9jhFH_u1URl5j79AU6yq4YZ8Na-96gHa85T9AbfomEQ&oe=6A2261F2"
+              alt="Logo"
+              className="relative z-10 h-full w-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+              referrerPolicy="no-referrer"
+            />
             
             {/* Subtle animated neon light flare */}
-            <span className="absolute top-1 left-1 flex h-1 w-1">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-1 w-1 bg-blue-400"></span>
+            <span className="absolute top-1 left-1 z-20 flex h-1 w-1">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-1 w-1 bg-amber-400"></span>
             </span>
           </div>
           <div>

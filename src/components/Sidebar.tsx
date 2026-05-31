@@ -80,21 +80,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, langu
         </nav>
 
         {/* Brand visual bottom card */}
-        <div className="mt-auto rounded-2xl border border-neutral-800/80 bg-gradient-to-b from-neutral-900 to-neutral-950 p-4 shadow-xl">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-            <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-mono">
-              {t.systemStatus}
-            </span>
+        <div className="mt-auto rounded-2xl border border-neutral-800/80 bg-gradient-to-b from-neutral-900 to-neutral-950 p-4 shadow-xl flex items-start gap-3">
+          <img 
+            src="https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-6/555918514_1376236214503912_7142926422343815940_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-Ee25hTmxCsQ7kNvwFuTPVH&_nc_oc=AdqlyaoAk5d0Tbidf0BDTv33gNOoATPHt8IsqnLkEr8D8HCTA-Lghj9jSqN9Q02pH08&_nc_zt=23&_nc_ht=scontent.fcai19-6.fna&_nc_gid=k43zHmpgIfbl2j-2R1K4ZA&_nc_ss=7b289&oh=00_Af_9jhFH_u1URl5j79AU6yq4YZ8Na-96gHa85T9AbfomEQ&oe=6A2261F2" 
+            alt="Logo"
+            className="h-10 w-10 rounded-xl object-cover border border-amber-500/30 flex-shrink-0"
+            referrerPolicy="no-referrer"
+          />
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5">
+              <span className="flex h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span className="text-[9px] uppercase tracking-wider text-neutral-500 font-mono">
+                {t.systemStatus}
+              </span>
+            </div>
+            <p className="text-xs font-bold text-neutral-300">
+              {t.appName}
+            </p>
+            <p className="text-[10px] text-neutral-500 leading-normal">
+              {language === 'ar' 
+                ? 'الخيارات والحاسبات تتم محلياً وبشكل آمن تماماً للتبادل التجاري العادل.'
+                : 'All operations and calibrations run locally and securely.'}
+            </p>
           </div>
-          <p className="text-xs font-bold text-neutral-300">
-            {t.appName}
-          </p>
-          <p className="mt-1 text-[10px] text-neutral-500 leading-relaxed">
-            {language === 'ar' 
-              ? 'الخيارات والحاسبات تتم محلياً وبشكل آمن تماماً للتبادل التجاري العادل.'
-              : 'All operations and calibrations run locally and securely.'}
-          </p>
         </div>
       </div>
     </aside>

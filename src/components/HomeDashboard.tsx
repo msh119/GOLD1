@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { ThreeDBullion } from './ThreeDVisuals';
+import { AIMarketAnalyst } from './AIMarketAnalyst';
 
 interface HomeDashboardProps {
   prices: GoldPrices;
@@ -102,11 +103,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     <div className="flex flex-col gap-6 md:gap-8">
       
       {/* Front Welcome Bento Hero Card */}
-      <div className="bento-card bg-gradient-to-br from-[#132247]/20 via-[#0d0d0d] to-[#161616] border border-blue-500/25 shadow-2xl shadow-blue-950/10">
-        <div className="absolute right-0 top-0 -mr-6 -mt-6 h-36 w-36 rounded-full bg-blue-500/[0.06] blur-3xl"></div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 text-blue-400 mb-3">
-            <Sparkles className="h-5 w-5" />
+      <div className="bento-card bg-gradient-to-br from-[#132247]/20 via-[#0d0d0d] to-[#161616] border border-blue-500/25 shadow-2xl shadow-blue-950/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="absolute right-0 top-0 -mr-6 -mt-6 h-36 w-36 rounded-full bg-blue-500/[0.06] blur-3xl pointer-events-none"></div>
+        <div className="relative z-10 flex-1">
+          <div className="flex items-center gap-2 text-amber-500 mb-3">
+            <Sparkles className="h-4 w-4 text-amber-500 font-bold animate-pulse" />
             <span className="text-[10px] font-extrabold tracking-widest uppercase font-mono">{t.appName}</span>
           </div>
           <h2 className="text-2xl md:text-3.5xl font-black tracking-tight text-white mb-2">
@@ -115,6 +116,18 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           <p className="text-sm text-neutral-400 max-w-2xl leading-relaxed">
             {t.dashboardDesc}
           </p>
+        </div>
+
+        {/* Decorative Brand Logo circle */}
+        <div className="relative z-10 flex-shrink-0 self-start md:self-auto">
+          <div className="relative h-20 w-20 rounded-2xl bg-neutral-900 border-2 border-amber-500/40 p-1 shadow-[0_0_20px_rgba(245,158,11,0.25)] flex items-center justify-center overflow-hidden">
+            <img 
+              src="https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-6/555918514_1376236214503912_7142926422343815940_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-Ee25hTmxCsQ7kNvwFuTPVH&_nc_oc=AdqlyaoAk5d0Tbidf0BDTv33gNOoATPHt8IsqnLkEr8D8HCTA-Lghj9jSqN9Q02pH08&_nc_zt=23&_nc_ht=scontent.fcai19-6.fna&_nc_gid=k43zHmpgIfbl2j-2R1K4ZA&_nc_ss=7b289&oh=00_Af_9jhFH_u1URl5j79AU6yq4YZ8Na-96gHa85T9AbfomEQ&oe=6A2261F2" 
+              alt="Logo Big" 
+              className="h-full w-full object-cover rounded-xl"
+              referrerPolicy="no-referrer"
+            />
+          </div>
         </div>
       </div>
 
@@ -396,6 +409,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         </div>
 
       </div>
+
+      {/* 🔮 AI Market Decider, Connected Servers Tracker & Pyramids Corporate Overview */}
+      <AIMarketAnalyst prices={prices} language={language} />
 
     </div>
   );

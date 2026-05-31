@@ -147,7 +147,7 @@ export default function App() {
           />
         );
       case 'info':
-        return <SystemInfo language={language} />;
+        return <SystemInfo language={language} prices={prices} history={history} />;
       default:
         return (
           <Calculator
@@ -163,28 +163,40 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070707] text-neutral-100 selection:bg-yellow-500/20 selection:text-yellow-400">
+    <div className="min-h-screen bg-[#070707] text-neutral-100 selection:bg-yellow-500/20 selection:text-yellow-400 relative overflow-hidden">
       
+      {/* 🌟 PREMIUM SITE BACKGROUND WATERMARK LOGO 🌟 */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden flex items-center justify-center opacity-[0.03] select-none scale-105">
+        <img 
+          src="https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-6/555918514_1376236214503912_7142926422343815940_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=-Ee25hTmxCsQ7kNvwFuTPVH&_nc_oc=AdqlyaoAk5d0Tbidf0BDTv33gNOoATPHt8IsqnLkEr8D8HCTA-Lghj9jSqN9Q02pH08&_nc_zt=23&_nc_ht=scontent.fcai19-6.fna&_nc_gid=k43zHmpgIfbl2j-2R1K4ZA&_nc_ss=7b289&oh=00_Af_9jhFH_u1URl5j79AU6yq4YZ8Na-96gHa85T9AbfomEQ&oe=6A2261F2" 
+          alt="Pyramids Gold Backdrop Watermark" 
+          className="w-[85vw] h-[85vw] max-w-[1100px] max-h-[1100px] object-cover rounded-full"
+          referrerPolicy="no-referrer"
+        />
+      </div>
+
       {/* Golden accent bar at the very top */}
-      <div className="h-1 w-full bg-gradient-to-r from-yellow-700 via-amber-500 to-yellow-300" />
+      <div className="relative z-10 h-1 w-full bg-gradient-to-r from-yellow-700 via-amber-500 to-yellow-300" />
 
       {/* Dynamic Header */}
-      <Header 
-        prices={prices} 
-        language={language} 
-        setLanguage={handleSetLanguage} 
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      <div className="relative z-10">
+        <Header 
+          prices={prices} 
+          language={language} 
+          setLanguage={handleSetLanguage} 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      </div>
 
       {/* Body Frame Wrapper */}
-      <div className="mx-auto flex max-w-[1600px]">
+      <div className="mx-auto flex max-w-[1600px] relative z-10">
         
         {/* Sidebar Nav (Desktop only) */}
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
 
         {/* Core Main Viewport content */}
-        <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 pb-24 md:pb-8">
+        <main className="flex-1 px-4 py-8 sm:px-6 md:px-8 pb-24 md:pb-8 relative z-20">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -201,7 +213,9 @@ export default function App() {
       </div>
 
       {/* Sticky Bottom Nav (Mobile only) */}
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
+      <div className="relative z-30">
+        <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} language={language} />
+      </div>
     </div>
   );
 }
